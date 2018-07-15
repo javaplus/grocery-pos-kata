@@ -18,8 +18,9 @@ public class ShoppingCart {
     public double getItemTotal(){
 
         // add up all the item prices.
-        BigDecimal total = itemList.stream().map(Item::getPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal total = itemList.stream()
+                .map(Item::getPrice) // get price of items
+                .reduce(BigDecimal.ZERO, BigDecimal::add); // add price of items
         return total.doubleValue();
     }
-
 }

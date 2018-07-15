@@ -10,7 +10,7 @@ public class ShoppingCartTest {
 
 
     @Test
-    public void addingScannedItemIncreasesPrice(){
+    public void getItemTotal_whenAddingSingleItem_totalPriceEqualsItemPrice(){
 
         Item item = new Item();
         item.setPrice(new BigDecimal(10));
@@ -19,11 +19,11 @@ public class ShoppingCartTest {
 
         shoppingCart.addItem(item);
 
-        assertEquals(10.00, shoppingCart.getItemTotal(), 0.001);
+        assertEquals(item.getPrice().doubleValue(), shoppingCart.getItemTotal(), 0.001);
     }
 
     @Test
-    public void addingTwoOfAnItemDoublesItemTotal(){
+    public void getItemTotal_addingTwoOfSameItems_totalPriceIsDoubleItemPrice(){
         Item item = new Item();
         item.setPrice(new BigDecimal(10));
 
@@ -32,7 +32,8 @@ public class ShoppingCartTest {
         shoppingCart.addItem(item);
         shoppingCart.addItem(item);
 
-        assertEquals(20.00, shoppingCart.getItemTotal(), 0.001);
+        BigDecimal twiceThePriceValue = item.getPrice().multiply(new BigDecimal(2));
+        assertEquals(twiceThePriceValue.doubleValue(), shoppingCart.getItemTotal(), 0.001);
     }
 
 
