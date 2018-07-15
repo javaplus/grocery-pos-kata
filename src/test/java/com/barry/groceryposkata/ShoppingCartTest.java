@@ -22,5 +22,18 @@ public class ShoppingCartTest {
         assertEquals(10.00, shoppingCart.getItemTotal(), 0.001);
     }
 
+    @Test
+    public void addingTwoOfAnItemDoublesItemTotal(){
+        Item item = new Item();
+        item.setPrice(new BigDecimal(10));
+
+        ShoppingCart shoppingCart = new ShoppingCart();
+
+        shoppingCart.addItem(item);
+        shoppingCart.addItem(item);
+
+        assertEquals(20.00, shoppingCart.getItemTotal(), 0.001);
+    }
+
 
 }
