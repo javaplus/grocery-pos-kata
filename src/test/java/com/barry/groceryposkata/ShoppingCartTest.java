@@ -1,5 +1,6 @@
 package com.barry.groceryposkata;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -8,14 +9,18 @@ import static org.junit.Assert.assertEquals;
 
 public class ShoppingCartTest {
 
+    private ShoppingCart shoppingCart;
+
+    @Before
+    public void initializeShoppingCart(){
+        shoppingCart = new ShoppingCart();
+    }
 
     @Test
     public void getItemTotal_whenAddingSingleItem_totalPriceEqualsItemPrice(){
 
         Item item = new Item();
-        item.setPrice(new BigDecimal(10));
-
-        ShoppingCart shoppingCart = new ShoppingCart();
+        item.setPrice(10.00);
 
         shoppingCart.addItem(item);
 
@@ -25,9 +30,7 @@ public class ShoppingCartTest {
     @Test
     public void getItemTotal_addingTwoOfSameItems_totalPriceIsDoubleItemPrice(){
         Item item = new Item();
-        item.setPrice(new BigDecimal(10));
-
-        ShoppingCart shoppingCart = new ShoppingCart();
+        item.setPrice(10.00);
 
         shoppingCart.addItem(item);
         shoppingCart.addItem(item);
