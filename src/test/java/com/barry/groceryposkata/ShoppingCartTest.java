@@ -79,4 +79,20 @@ public class ShoppingCartTest {
 
     }
 
+    @Test public void getItemTotal_addingItemsWithAndWithoutWeight_totalPriceReflectsAllItems(){
+        Item itemWithWeight = new Item();
+        itemWithWeight.setPrice(3.00);
+        shoppingCart.addItem(itemWithWeight, 2.5);
+
+        Item itemNoWeight = new Item();
+        itemNoWeight.setPrice(2.00);
+        shoppingCart.addItem(itemNoWeight);
+
+        Item item2NoWeight = new Item();
+        item2NoWeight.setPrice(1.25);
+        shoppingCart.addItem(item2NoWeight);
+
+        assertEquals(10.75, shoppingCart.getItemTotal(), .001);
+    }
+
 }
