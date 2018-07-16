@@ -58,10 +58,24 @@ public class ShoppingCartTest {
 
         Item item = new Item();
         item.setPrice(3.00);
-        double weight = 3;
-        shoppingCart.addItem(item, weight);
+        shoppingCart.addItem(item, 3.0);
 
         assertEquals(9.0, shoppingCart.getItemTotal(), .001);
+
+    }
+
+    @Test
+    public void getItemTotal_addingMultipleItemsWithWeight_totalPriceReflectsItemsWithWeight(){
+
+        Item item1 = new Item();
+        item1.setPrice(3.00);
+        shoppingCart.addItem(item1, 3.0);
+
+        Item item2 = new Item();
+        item2.setPrice(2.00);
+        shoppingCart.addItem(item2, 1.5);
+
+        assertEquals(12.0, shoppingCart.getItemTotal(), .001);
 
     }
 
