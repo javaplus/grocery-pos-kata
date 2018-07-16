@@ -34,6 +34,13 @@ public class ShoppingCart {
         return total.doubleValue();
     }
 
+    /**
+     * Removes the entire ordered item. Including all quantities
+     */
+    public void removeOrderedItem(int idOfItemToRemove){
+        this.itemList = itemList.stream().filter(p-> p.getItem().getID() != idOfItemToRemove).collect(Collectors.toList());
+    }
+
 
 
 }
