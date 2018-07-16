@@ -12,9 +12,7 @@ public class ShoppingCart {
 
     public void addItem(Item item) {
 
-        ItemOrder itemOrder = new ItemOrder(item);
-
-        itemList.add(itemOrder);
+        this.addItem(item, 1.00);
     }
 
     public void addItem(Item item, double weight) {

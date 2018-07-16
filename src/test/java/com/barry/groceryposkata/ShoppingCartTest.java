@@ -16,6 +16,19 @@ public class ShoppingCartTest {
         shoppingCart = new ShoppingCart();
     }
 
+    private void addItemToShoppingCartWithWeight(int id, double price, double quantity){
+        Item item = new Item(id);
+        item.setPrice(price);
+        shoppingCart.addItem(item, quantity);
+    }
+
+    private void addItemToShoppingCart(int id, double price){
+        Item item = new Item(id);
+        item.setPrice(price);
+        shoppingCart.addItem(item);
+    }
+
+
     @Test
     public void getItemTotal_whenAddingSingleItem_totalPriceEqualsItemPrice(){
 
@@ -23,6 +36,7 @@ public class ShoppingCartTest {
         item.setPrice(10.00);
 
         shoppingCart.addItem(item);
+
 
         assertEquals(item.getPrice().doubleValue(), shoppingCart.getItemTotal(), 0.001);
     }
@@ -56,9 +70,8 @@ public class ShoppingCartTest {
     @Test
     public void getItemTotal_addingItemAndWeight_totalPriceReflectsItemWithWeight(){
 
-        Item item = new Item(1);
-        item.setPrice(3.00);
-        shoppingCart.addItem(item, 3.0);
+        addItemToShoppingCartWithWeight(1, 3.00, 3.0);
+
 
         assertEquals(9.0, shoppingCart.getItemTotal(), .001);
 
@@ -67,13 +80,9 @@ public class ShoppingCartTest {
     @Test
     public void getItemTotal_addingMultipleItemsWithWeight_totalPriceReflectsItemsWithWeight(){
 
-        Item item1 = new Item(1);
-        item1.setPrice(3.00);
-        shoppingCart.addItem(item1, 3.0);
+        addItemToShoppingCartWithWeight(1, 3.00, 3.0);
 
-        Item item2 = new Item(2);
-        item2.setPrice(2.00);
-        shoppingCart.addItem(item2, 1.5);
+        addItemToShoppingCartWithWeight(2, 2.00, 1.5);
 
         assertEquals(12.0, shoppingCart.getItemTotal(), .001);
 
@@ -81,36 +90,27 @@ public class ShoppingCartTest {
 
     @Test
     public void getItemTotal_addingItemsWithAndWithoutWeight_totalPriceReflectsAllItems(){
-        Item itemWithWeight = new Item(1);
-        itemWithWeight.setPrice(3.00);
-        shoppingCart.addItem(itemWithWeight, 2.5);
 
-        Item itemNoWeight = new Item(2);
-        itemNoWeight.setPrice(2.00);
-        shoppingCart.addItem(itemNoWeight);
+        addItemToShoppingCartWithWeight(1, 3.00, 2.5);
 
-        Item item2NoWeight = new Item(3);
-        item2NoWeight.setPrice(1.25);
-        shoppingCart.addItem(item2NoWeight);
+        addItemToShoppingCart(2, 2.00);
+
+        addItemToShoppingCart(3, 1.25);
 
         assertEquals(10.75, shoppingCart.getItemTotal(), .001);
     }
 
     @Test
     public void removeItem_removingItemFromShoppingCart_reducesTotalPriceByRemovedOrderedItemPrice(){
-        Item itemWithWeight = new Item(1);
-        itemWithWeight.setPrice(3.00);
-        shoppingCart.addItem(itemWithWeight, 2.5);
+        addItemToShoppingCartWithWeight(1, 3.00, 2.5);
 
+        addItemToShoppingCart(2, 2.00);
 
-        Item itemNoWeight = new Item(2);
-        itemNoWeight.setPrice(2.00);
-        shoppingCart.addItem(itemNoWeight);
 
         int itemId = 3;
-        Item item2NoWeight = new Item(itemId);
-        item2NoWeight.setPrice(1.25);
-        shoppingCart.addItem(item2NoWeight);
+
+        addItemToShoppingCart(itemId, 1.25);
+
 
         // assert value before removal
         assertEquals(10.75, shoppingCart.getItemTotal(), .001);
@@ -118,6 +118,24 @@ public class ShoppingCartTest {
         // assert value after removal
         assertEquals(9.50, shoppingCart.getItemTotal(), .001);
 
+    }
+
+
+    @Test
+    public void removeItem_removingWeightedItemFromShoppingCart_reducesTotalPriceByRemovedOrderedItemPrice(){
+
+        int itemId = 1;
+        addItemToShoppingCartWithWeight(itemId, 3.00, 2.5);
+
+        addItemToShoppingCart(2, 2.00);
+
+        addItemToShoppingCart(3, 1.25);
+
+        // assert value before removal
+        assertEquals(10.75, shoppingCart.getItemTotal(), .001);
+        shoppingCart.removeOrderedItem(itemId);
+        // assert value after removal
+        assertEquals(3.25, shoppingCart.getItemTotal(), .001);
 
     }
 
