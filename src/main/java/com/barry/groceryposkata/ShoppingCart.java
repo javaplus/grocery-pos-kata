@@ -8,10 +8,20 @@ import java.util.stream.Collectors;
 
 public class ShoppingCart {
 
-    List<Item> itemList = new ArrayList<Item>();
+    List<ItemOrder> itemList = new ArrayList<ItemOrder>();
 
     public void addItem(Item item) {
-        itemList.add(item);
+
+        ItemOrder itemOrder = new ItemOrder(item);
+
+        itemList.add(itemOrder);
+    }
+
+    public void addItem(Item item, double weight) {
+
+        ItemOrder itemOrder = new ItemOrder(item, weight);
+
+        itemList.add(itemOrder);
     }
 
 
@@ -19,8 +29,11 @@ public class ShoppingCart {
 
         // add up all the item prices.
         BigDecimal total = itemList.stream()
-                .map(Item::getPrice) // get price of items
-                .reduce(BigDecimal.ZERO, BigDecimal::add); // add price of items
+                .map(ItemOrder::getPrice) // get price of items
+                .reduce(BigDecimal.ZERO, BigDecimal::add); // add price of all items
         return total.doubleValue();
     }
+
+
+
 }
