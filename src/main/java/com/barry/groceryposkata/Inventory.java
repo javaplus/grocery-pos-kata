@@ -1,5 +1,6 @@
 package com.barry.groceryposkata;
 
+import lombok.Getter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,8 @@ public class Inventory {
 
     private int greatestId = 0;
 
-    List<Item> itemList = new ArrayList<Item>();
+    @Getter
+    private List<Item> itemList = new ArrayList<Item>();
 
 
     public int addItem(String itemName, double itemPrice){
@@ -26,6 +28,10 @@ public class Inventory {
 
         return newItem.getID();
 
+    }
+
+    public int getCount(){
+        return itemList.size();
     }
 
 

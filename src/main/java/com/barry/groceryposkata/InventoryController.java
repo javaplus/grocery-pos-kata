@@ -30,15 +30,10 @@ public class InventoryController {
 
     @RequestMapping(value = "items", method = GET, produces= "application/json")
     @ResponseBody
-    public List<Item> addItem() throws Exception{
+    public List<Item> getItems() throws Exception{
 
-        Item item = new Item();
-        item.setPrice(3.00);
 
-        List<Item> itemList = new ArrayList<>();
-        itemList.add(item);
-
-        return itemList;
+        return inventory.getItemList();
 
     }
 

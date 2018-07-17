@@ -31,4 +31,12 @@ public class InventoryTest {
         assertNotEquals(itemId1, itemId2);
     }
 
+
+    @Test
+    public void addItem_addingItem_increasesInventoryCount(){
+        int initialSize = inventory.getCount();
+        inventory.addItem("Twizzlers", 1.99);
+        assertEquals(initialSize+1, inventory.getCount());
+    }
+
 }

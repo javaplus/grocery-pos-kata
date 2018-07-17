@@ -3,6 +3,7 @@ package com.barry.groceryposkata;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Data
 public class Item{
@@ -20,7 +21,7 @@ public class Item{
 
     // convenience method to set price with double
     public void setPrice(double priceAsDouble){
-        price = new BigDecimal(priceAsDouble);
+        price = new BigDecimal(priceAsDouble).setScale(2, RoundingMode.HALF_UP);
     }
 
 

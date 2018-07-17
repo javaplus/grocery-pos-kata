@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
@@ -27,26 +28,36 @@ public class InventoryControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
+	@Autowired
+	private Inventory inventory;
+
 	@Test
-	public void addItem_whenAddingNewItem_returnsItemId() throws Exception {
+	public void addItem_whenAddingNewItem_increasesInventoryByOne() throws Exception {
+
+		int initialInventorySize = inventory.getCount();
+
 		mockMvc.perform(post("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{\"price\":\"2.50\"}"))
-				.andExpect(status().isOk())
-				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("id", is(1)));
+				.andExpect(status().isOk());
+
+		assertEquals(initialInventorySize +1, inventory.getCount());
+
 	}
 
 
 	@Test
 	public void getItems_whenCallingGetItems_returnsAllInventoryItemsAdded() throws Exception {
+
+		inventory.addItem("TestTwinkies", 3.55);
+
 		mockMvc.perform(get("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$[0].price", is(3)));
+				.andExpect(jsonPath("$[0].price", is(3.55)));
 	}
 
 }
