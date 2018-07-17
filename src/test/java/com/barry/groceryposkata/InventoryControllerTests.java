@@ -34,7 +34,7 @@ public class InventoryControllerTests {
 				.content("{\"price\":\"2.50\"}"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("id", is("1")));
+				.andExpect(jsonPath("id", is(1)));
 	}
 
 
