@@ -10,6 +10,10 @@ public class Item{
     private int ID;
     private BigDecimal price;
 
+    public Item(){
+        this.ID = 1;
+    }
+
     public Item(int id){
         this.ID = id;
     }
