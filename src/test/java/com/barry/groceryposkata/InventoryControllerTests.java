@@ -1,5 +1,6 @@
 package com.barry.groceryposkata;
 
+import com.jayway.jsonpath.JsonPath;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
+// import static org.hamcrest.Matchers.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,11 +51,27 @@ public class InventoryControllerTests {
 
 	}
 
+	@Test
+	public void addItem_whenAddingNewItem_thatItemCanBeFoundInInventory() throws Exception {
+
+		String responseBody = mockMvc.perform(post("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\"price\":\"2.50\"}"))
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+
+		int id = JsonPath.read(responseBody, "$.id");
+
+		Item item = inventory.getItemList().stream().filter(p->p.getID()==id).collect(Collectors.toList()).get(0);
+		assertEquals(2.50, item.getPrice().doubleValue(), 0.001);
+
+	}
+
 
 	@Test
-	public void getItems_whenCallingGetItems_returnsAllInventoryItemsAdded() throws Exception {
+	public void getItems_whenCallingGetItems_returnsNewlyAddedItem() throws Exception {
 
-		inventory.addItem("TestTwinkies", 3.55);
+		int id = inventory.addItem("TestTwinkies", 3.55);
 
 		mockMvc.perform(get("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -57,7 +79,8 @@ public class InventoryControllerTests {
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$[0].price", is(3.55)));
+				.andExpect(jsonPath("$[*].id", hasItem(id)));
+
 	}
 
 }
