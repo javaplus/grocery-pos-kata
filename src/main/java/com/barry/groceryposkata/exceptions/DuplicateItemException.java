@@ -1,4 +1,4 @@
-package com.barry.groceryposkata;
+package com.barry.groceryposkata.exceptions;
 
 public class DuplicateItemException extends Exception {
 

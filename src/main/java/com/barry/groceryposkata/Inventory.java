@@ -1,5 +1,7 @@
 package com.barry.groceryposkata;
 
+import com.barry.groceryposkata.exceptions.DuplicateItemException;
+import com.barry.groceryposkata.exceptions.ItemNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -21,7 +23,7 @@ public class Inventory {
     private Map<String, Item> itemMap = new HashMap<>();
 
 
-    public int addItem(String itemName, double itemPrice) throws DuplicateItemException{
+    public int addItem(String itemName, double itemPrice) throws DuplicateItemException {
 
         if(itemMap.containsKey(itemName)){
             String message = String.format("Item with name:%s already exists in inventory. Perhaps you want to use updateItem.", itemName);
@@ -46,6 +48,17 @@ public class Inventory {
     public Item getItemByName(String name){
         Item foundItem = itemMap.get(name);
         return foundItem;
+    }
+
+    public void updateItem(Item item) throws ItemNotFoundException{
+
+        if(itemMap.containsKey(item.getName()) == false){
+            String message = String.format("Item with name:%s not found in inventory.", item.getName());
+            throw new ItemNotFoundException(message);
+        }
+        // if item does exist update it replace or put does the same thing if it exists.
+        itemMap.put(item.getName(), item);
+
     }
 
 

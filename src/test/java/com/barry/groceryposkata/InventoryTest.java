@@ -1,5 +1,7 @@
 package com.barry.groceryposkata;
 
+import com.barry.groceryposkata.exceptions.DuplicateItemException;
+import com.barry.groceryposkata.exceptions.ItemNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -55,7 +57,31 @@ public class InventoryTest {
         inventory.addItem(name, 2.50);
     }
 
+    @Test(expected = ItemNotFoundException.class)
+    public void updateItem_attemptToUpdateItemThatDoesNotExist_throwsItemNotFoundExcpetion() throws Exception{
 
+        Item nonExistingItem = new Item(1);
+        nonExistingItem.setPrice(579.99);
+        nonExistingItem.setName("Flux Capacitor");
+
+        inventory.updateItem(nonExistingItem);
+    }
+
+    @Test
+    public void updateItem_updatingItemPrice_lastPriceIsKept() throws Exception{
+
+        String name = "Bacon!!!";
+        inventory.addItem(name, 1.00);
+        Item item = inventory.getItemByName(name);
+
+        // update item price
+        item.setPrice(2.99);
+
+        inventory.updateItem(item);
+
+        assertEquals(2.99, inventory.getItemByName(name).getPrice().doubleValue(), 0.001);
+
+    }
 
 
 
