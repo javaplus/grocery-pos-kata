@@ -36,9 +36,10 @@ public class InventoryControllerTests {
 
 		int initialInventorySize = inventory.getCount();
 
+		String itemJSON = this.buildItemJSON("Doritos", 4.59);
 		mockMvc.perform(post("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\"price\":\"2.50\"}"))
+				.content(itemJSON))
 				.andExpect(status().isOk());
 
 		assertEquals(initialInventorySize +1, inventory.getCount());
@@ -46,11 +47,34 @@ public class InventoryControllerTests {
 	}
 
 	@Test
+	public void addItem_whenAddingTwoNewItem_increasesInventoryByTwo() throws Exception {
+
+		int initialInventorySize = inventory.getCount();
+
+		String itemJSON1 = this.buildItemJSON("Doritos", 4.59);
+		String itemJSON2 = this.buildItemJSON("Tostitos", 3.59);
+
+		mockMvc.perform(post("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemJSON1))
+				.andExpect(status().isOk());
+		mockMvc.perform(post("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemJSON2))
+				.andExpect(status().isOk());
+
+		assertEquals(initialInventorySize +2, inventory.getCount());
+
+	}
+
+	@Test
 	public void addItem_afterCallingAddItem_thatItemCanBeFoundInInventory() throws Exception {
+
+		String itemJson = buildItemJSON("twinkies", 2.50);
 
 		String responseBody = mockMvc.perform(post("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\"name\":\"twinkies\",\"price\":\"2.50\"}"))
+				.content(itemJson))
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
 
@@ -66,7 +90,8 @@ public class InventoryControllerTests {
 	@Test
 	public void getItems_whenCallingGetItems_returnsNewlyAddedItem() throws Exception {
 
-		int id = inventory.addItem("TestTwinkies", 3.55);
+		String itemName = "TestTwinkies";
+		int id = inventory.addItem(itemName, 3.55);
 
 		mockMvc.perform(get("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -74,8 +99,14 @@ public class InventoryControllerTests {
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("$[*].id", hasItem(id)));
+				.andExpect(jsonPath("$[*].id", hasItem(id)))
+				.andExpect(jsonPath("$[*].name", hasItem(itemName)));
 
+	}
+
+
+	private String buildItemJSON(String name, double price){
+		return String.format("{\"name\":\"%s\",\"price\":%s}", name, price);
 	}
 
 }
