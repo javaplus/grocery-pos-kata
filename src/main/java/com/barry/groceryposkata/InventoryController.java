@@ -21,8 +21,6 @@ public class InventoryController {
     @RequestMapping(value = "items", method = POST, produces= "application/json")
     @ResponseBody
     public Item addItem(@RequestBody Item item) throws Exception{
-        item.setID(1);
-        System.out.println("Item price:" + item.getPrice());
         item.setID(inventory.addItem(item.getName(), item.getPrice().doubleValue()));
         return item;
 
@@ -34,6 +32,15 @@ public class InventoryController {
 
 
         return inventory.getItemMap().values().stream().collect(Collectors.toList());
+
+    }
+
+    @RequestMapping(value = "items", method = PUT, produces= "application/json")
+    @ResponseBody
+    public Item updateItem(@RequestBody Item item) throws Exception{
+
+        inventory.updateItem(item);
+        return item;
 
     }
 

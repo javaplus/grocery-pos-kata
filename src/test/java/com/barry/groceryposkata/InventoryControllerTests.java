@@ -115,7 +115,44 @@ public class InventoryControllerTests {
 
 	}
 
+	@Test
+	public void updateItem_whenUpdatingItemPrice_updatedItemPriceReflectedInInventory() throws Exception {
 
+		// add item to inventory to be updated via controller
+		String itemName = "TestTwinkies";
+		int id = inventory.addItem(itemName, 3.55);
+
+		double newPrice = 2.45;
+		String itemJSON = String.format("{\"id\":%s, \"name\":\"%s\",\"price\":%s}", id, itemName, newPrice);
+
+		mockMvc.perform(put("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemJSON))
+				.andExpect(status().isOk());
+
+		//get item from inventory
+		Item item = inventory.getItemByName(itemName);
+
+		assertEquals(newPrice, item.getPrice().doubleValue(), 0.001);
+
+
+	}
+
+	@Test
+	public void updateItem_whenUpdatingItemThatDoesntExist_returns404() throws Exception {
+
+		// add item to inventory to be updated via controller
+		String itemName = "You Dont Got None Of This to Update";
+		double price = 2.45;
+		int madeUpId = 3434;
+		String itemJSON = String.format("{\"id\":%s, \"name\":\"%s\",\"price\":%s}", madeUpId, itemName, price);
+
+		mockMvc.perform(put("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemJSON))
+				.andExpect(status().isNotFound());
+
+	}
 
 
 
