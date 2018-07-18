@@ -39,4 +39,12 @@ public class InventoryTest {
         assertEquals(initialSize+1, inventory.getCount());
     }
 
+
+    @Test
+    public void getItemByName_whenCalledWithItemInInventory_returnsThatItem(){
+        String name = "Twizzlers";
+        int id = inventory.addItem(name, 1.99);
+        assertEquals(id, inventory.getItemByName(name).getID());
+    }
+
 }

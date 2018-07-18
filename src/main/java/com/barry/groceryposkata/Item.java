@@ -8,8 +8,11 @@ import java.math.RoundingMode;
 @Data
 public class Item{
 
+
     private int ID;
+    private String name;
     private BigDecimal price;
+
 
     public Item(){
         this.ID = 1;

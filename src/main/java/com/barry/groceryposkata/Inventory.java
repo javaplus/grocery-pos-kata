@@ -23,6 +23,7 @@ public class Inventory {
 
         Item newItem = new Item(generateNextId());
         newItem.setPrice(itemPrice);
+        newItem.setName(itemName);
 
         itemList.add(newItem);
 
@@ -34,6 +35,10 @@ public class Inventory {
         return itemList.size();
     }
 
+    public Item getItemByName(String name){
+        Item foundItem = itemList.stream().filter(item-> item.getName().equalsIgnoreCase(name)).findFirst().get();
+        return foundItem;
+    }
 
     private int generateNextId(){
         return ++greatestId;

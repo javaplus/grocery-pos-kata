@@ -62,7 +62,7 @@ public class InventoryControllerTests {
 
 		int id = JsonPath.read(responseBody, "$.id");
 
-		Item item = inventory.getItemList().stream().filter(p->p.getID()==id).collect(Collectors.toList()).get(0);
+		Item item = inventory.getItemList().stream().filter(p->p.getID()==id).findFirst().get();
 		assertEquals(2.50, item.getPrice().doubleValue(), 0.001);
 
 	}
