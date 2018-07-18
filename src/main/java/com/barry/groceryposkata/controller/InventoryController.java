@@ -1,6 +1,8 @@
-package com.barry.groceryposkata;
+package com.barry.groceryposkata.controller;
 
 
+import com.barry.groceryposkata.service.Inventory;
+import com.barry.groceryposkata.entities.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

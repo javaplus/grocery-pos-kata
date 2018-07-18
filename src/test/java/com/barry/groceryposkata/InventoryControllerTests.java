@@ -1,5 +1,7 @@
 package com.barry.groceryposkata;
 
+import com.barry.groceryposkata.entities.Item;
+import com.barry.groceryposkata.service.Inventory;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest()
+@SpringBootTest
 @AutoConfigureMockMvc
 public class InventoryControllerTests {
 

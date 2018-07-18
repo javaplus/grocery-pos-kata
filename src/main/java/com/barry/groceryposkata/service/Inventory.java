@@ -1,7 +1,8 @@
-package com.barry.groceryposkata;
+package com.barry.groceryposkata.service;
 
-import com.barry.groceryposkata.exceptions.DuplicateItemException;
-import com.barry.groceryposkata.exceptions.ItemNotFoundException;
+import com.barry.groceryposkata.entities.Item;
+import com.barry.groceryposkata.exception.DuplicateItemException;
+import com.barry.groceryposkata.exception.ItemNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

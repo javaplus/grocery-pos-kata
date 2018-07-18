@@ -1,4 +1,4 @@
-package com.barry.groceryposkata.exceptions;
+package com.barry.groceryposkata.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,7 +1,9 @@
 package com.barry.groceryposkata;
 
-import com.barry.groceryposkata.exceptions.DuplicateItemException;
-import com.barry.groceryposkata.exceptions.ItemNotFoundException;
+import com.barry.groceryposkata.entities.Item;
+import com.barry.groceryposkata.exception.DuplicateItemException;
+import com.barry.groceryposkata.exception.ItemNotFoundException;
+import com.barry.groceryposkata.service.Inventory;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

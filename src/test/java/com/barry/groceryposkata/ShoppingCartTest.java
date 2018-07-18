@@ -1,5 +1,7 @@
 package com.barry.groceryposkata;
 
+import com.barry.groceryposkata.entities.Item;
+import com.barry.groceryposkata.service.ShoppingCart;
 import org.junit.Before;
 import org.junit.Test;
 
