@@ -1,6 +1,7 @@
 package com.barry.groceryposkata;
 
 import com.jayway.jsonpath.JsonPath;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashMap;
+
 import static org.hamcrest.CoreMatchers.*;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -31,8 +35,15 @@ public class InventoryControllerTests {
 	@Autowired
 	private Inventory inventory;
 
+	@Before
+	public void clearInventory(){
+		// clear inventory
+		inventory.setItemMap(new HashMap<>());
+	}
+
 	@Test
 	public void addItem_whenAddingNewItem_increasesInventoryByOne() throws Exception {
+
 
 		int initialInventorySize = inventory.getCount();
 
@@ -80,7 +91,7 @@ public class InventoryControllerTests {
 
 		int id = JsonPath.read(responseBody, "$.id");
 
-		Item item = inventory.getItemList().stream().filter(p->p.getID()==id).findFirst().get();
+		Item item = inventory.getItemMap().values().stream().filter(p->p.getID()==id).findFirst().get();
 		assertEquals(2.50, item.getPrice().doubleValue(), 0.001);
 		assertEquals("Item name matches what was passed to controller","twinkies", item.getName());
 
@@ -103,6 +114,9 @@ public class InventoryControllerTests {
 				.andExpect(jsonPath("$[*].name", hasItem(itemName)));
 
 	}
+
+
+
 
 
 	private String buildItemJSON(String name, double price){
