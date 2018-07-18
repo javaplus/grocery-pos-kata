@@ -21,7 +21,7 @@ public class InventoryController {
     public Item addItem(@RequestBody Item item) throws Exception{
         item.setID(1);
         System.out.println("Item price:" + item.getPrice());
-        item.setID(inventory.addItem("", item.getPrice().doubleValue()));
+        item.setID(inventory.addItem(item.getName(), item.getPrice().doubleValue()));
         return item;
 
     }

@@ -46,11 +46,11 @@ public class InventoryControllerTests {
 	}
 
 	@Test
-	public void addItem_whenAddingNewItem_thatItemCanBeFoundInInventory() throws Exception {
+	public void addItem_afterCallingAddItem_thatItemCanBeFoundInInventory() throws Exception {
 
 		String responseBody = mockMvc.perform(post("/inventory/items")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content("{\"price\":\"2.50\"}"))
+				.content("{\"name\":\"twinkies\",\"price\":\"2.50\"}"))
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
 
@@ -58,6 +58,7 @@ public class InventoryControllerTests {
 
 		Item item = inventory.getItemList().stream().filter(p->p.getID()==id).findFirst().get();
 		assertEquals(2.50, item.getPrice().doubleValue(), 0.001);
+		assertEquals("Item name matches what was passed to controller","twinkies", item.getName());
 
 	}
 
