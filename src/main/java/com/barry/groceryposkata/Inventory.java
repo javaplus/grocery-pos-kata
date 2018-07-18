@@ -26,7 +26,7 @@ public class Inventory {
     public int addItem(String itemName, double itemPrice) throws DuplicateItemException {
 
         if(itemMap.containsKey(itemName)){
-            String message = String.format("Item with name:%s already exists in inventory. Perhaps you want to use updateItem.", itemName);
+            String message = String.format("Item with name:%s already exists in inventory. Perhaps you want to update the item.", itemName);
             throw new DuplicateItemException(message);
         }
 

@@ -154,6 +154,24 @@ public class InventoryControllerTests {
 
 	}
 
+	@Test
+	public void addItem_whenAddingItemThatAlreadyExist_returns409() throws Exception {
+
+		// add item to inventory to make sure it exists
+		String itemName = "TestTwinkies";
+
+		inventory.addItem(itemName, 2.45);
+
+		String itemJSON = this.buildItemJSON(itemName, 3.12);
+
+		// try to add this item that via the controller
+		mockMvc.perform(post("/inventory/items")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(itemJSON))
+				.andExpect(status().isConflict());
+
+	}
+
 
 
 	private String buildItemJSON(String name, double price){
