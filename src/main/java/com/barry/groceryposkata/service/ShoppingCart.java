@@ -3,24 +3,32 @@ package com.barry.groceryposkata.service;
 
 import com.barry.groceryposkata.entities.Item;
 import com.barry.groceryposkata.entities.ItemOrder;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ShoppingCart {
+
+    @Autowired
+    @Setter
+    private Inventory inventory;
 
     List<ItemOrder> itemList = new ArrayList<ItemOrder>();
 
-    public void addItem(Item item) {
+    public void addItem(String name) {
 
-        this.addItem(item, 1.00);
+        this.addItem(name, 1.00);
     }
 
-    public void addItem(Item item, double weight) {
+    public void addItem(String name, double weight) {
 
-        ItemOrder itemOrder = new ItemOrder(item, weight);
+        ItemOrder itemOrder = new ItemOrder(inventory.getItemByName(name), weight);
 
         itemList.add(itemOrder);
     }
