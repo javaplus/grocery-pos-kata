@@ -3,6 +3,7 @@ package com.barry.groceryposkata.service;
 
 import com.barry.groceryposkata.entities.Item;
 import com.barry.groceryposkata.entities.ItemOrder;
+import com.barry.groceryposkata.exception.ItemNotFoundException;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,12 +22,12 @@ public class ShoppingCart {
 
     List<ItemOrder> itemList = new ArrayList<ItemOrder>();
 
-    public void addItem(String name) {
+    public void addItem(String name) throws ItemNotFoundException {
 
         this.addItem(name, 1.00);
     }
 
-    public void addItem(String name, double weight) {
+    public void addItem(String name, double weight) throws ItemNotFoundException{
 
         ItemOrder itemOrder = new ItemOrder(inventory.getItemByName(name), weight);
 

@@ -46,7 +46,11 @@ public class Inventory {
         return itemMap.size();
     }
 
-    public Item getItemByName(String name){
+    public Item getItemByName(String name) throws ItemNotFoundException{
+        if(!itemMap.containsKey(name)){
+            String message = String.format("Item with name:%s does not exist in Inventory.", name);
+            throw new ItemNotFoundException(message);
+        }
         Item foundItem = itemMap.get(name);
         return foundItem;
     }

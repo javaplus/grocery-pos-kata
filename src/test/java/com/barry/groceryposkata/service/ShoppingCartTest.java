@@ -27,7 +27,7 @@ public class ShoppingCartTest {
         shoppingCart.setInventory(mockedInventory);
     }
 
-     private void addItemToShoppingCartWithWeight(int id, String name,  double price, double quantity){
+     private void addItemToShoppingCartWithWeight(int id, String name,  double price, double quantity) throws Exception{
         Item item = new Item(id);
         item.setPrice(price);
         item.setName(name);
@@ -37,7 +37,7 @@ public class ShoppingCartTest {
         shoppingCart.addItem(name, quantity);
     }
 
-    private void addItemToShoppingCart(int id, String name,  double price){
+    private void addItemToShoppingCart(int id, String name,  double price) throws Exception{
         Item item = new Item(id);
         item.setPrice(price);
         item.setName(name);
@@ -49,7 +49,7 @@ public class ShoppingCartTest {
 
 
     @Test
-    public void getItemTotal_whenAddingSingleItem_totalPriceEqualsItemPrice(){
+    public void getItemTotal_whenAddingSingleItem_totalPriceEqualsItemPrice() throws Exception{
 
         String itemName = "KitKat";
         Item item = new Item(1);
@@ -65,7 +65,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void getItemTotal_addingTwoOfSameItems_totalPriceIsDoubleItemPrice(){
+    public void getItemTotal_addingTwoOfSameItems_totalPriceIsDoubleItemPrice() throws Exception{
         String itemName = "Bottle Caps";
         Item item = new Item(1);
         item.setPrice(10.00);
@@ -81,7 +81,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void getItemTotal_addingTwoDifferentItems_totalPriceIsSumOfItemPrices(){
+    public void getItemTotal_addingTwoDifferentItems_totalPriceIsSumOfItemPrices() throws Exception{
         String item1Name = "PayDay";
         Item item1 = new Item(1);
         item1.setPrice(10.00);
@@ -100,7 +100,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void getItemTotal_addingItemAndWeight_totalPriceReflectsItemWithWeight(){
+    public void getItemTotal_addingItemAndWeight_totalPriceReflectsItemWithWeight() throws Exception{
 
         addItemToShoppingCartWithWeight(1, "Skittles",  3.00, 3.0);
 
@@ -110,7 +110,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void getItemTotal_addingMultipleItemsWithWeight_totalPriceReflectsItemsWithWeight(){
+    public void getItemTotal_addingMultipleItemsWithWeight_totalPriceReflectsItemsWithWeight() throws Exception{
 
         addItemToShoppingCartWithWeight(1, "Chicken Chicken", 3.00, 3.0);
 
@@ -121,7 +121,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void getItemTotal_addingItemsWithAndWithoutWeight_totalPriceReflectsAllItems(){
+    public void getItemTotal_addingItemsWithAndWithoutWeight_totalPriceReflectsAllItems() throws Exception{
 
         addItemToShoppingCartWithWeight(1, "Brave Chicken",3.00, 2.5);
 
@@ -133,7 +133,7 @@ public class ShoppingCartTest {
     }
 
     @Test
-    public void removeItem_removingItemFromShoppingCart_reducesTotalPriceByRemovedOrderedItemPrice(){
+    public void removeItem_removingItemFromShoppingCart_reducesTotalPriceByRemovedOrderedItemPrice() throws Exception{
         addItemToShoppingCartWithWeight(1, "Chocolaty Ovaltine", 3.00, 2.5);
 
         addItemToShoppingCart(2, "Orphan Annie's Decoder Ring", 2.00);
@@ -154,7 +154,7 @@ public class ShoppingCartTest {
 
 
     @Test
-    public void removeItem_removingWeightedItemFromShoppingCart_reducesTotalPriceByRemovedOrderedItemPrice(){
+    public void removeItem_removingWeightedItemFromShoppingCart_reducesTotalPriceByRemovedOrderedItemPrice() throws Exception{
 
         int itemId = 1;
         addItemToShoppingCartWithWeight(itemId, "Buckeye", 3.00, 2.5);

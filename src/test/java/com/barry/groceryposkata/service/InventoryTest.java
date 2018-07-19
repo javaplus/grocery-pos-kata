@@ -60,7 +60,7 @@ public class InventoryTest {
     }
 
     @Test(expected = ItemNotFoundException.class)
-    public void updateItem_attemptToUpdateItemThatDoesNotExist_throwsItemNotFoundExcpetion() throws Exception{
+    public void updateItem_attemptToUpdateItemThatDoesNotExist_throwsItemNotFoundException() throws Exception{
 
         Item nonExistingItem = new Item(1);
         nonExistingItem.setPrice(579.99);
