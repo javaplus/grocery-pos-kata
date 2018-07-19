@@ -15,7 +15,7 @@ I've added a PostMan collection if you wish to test it actually running.  Postma
 
 I've also created a Swagger/Open API Spec on SwaggerHub for what I've completed so far.
 
-The OAS/Swagger can be found [here](https://app.swaggerhub.com/apis/btarlton/grocery-store_kata_api/1.0.0#/)
+The [OAS/Swagger](https://app.swaggerhub.com/apis/btarlton/grocery-store_kata_api/1.0.0#/) can be found [here](https://app.swaggerhub.com/apis/btarlton/grocery-store_kata_api/1.0.0#/)
 
 I did not add all the functionality for the Kata, but tried to do enough to demonstrate what I'm capable of.
 
