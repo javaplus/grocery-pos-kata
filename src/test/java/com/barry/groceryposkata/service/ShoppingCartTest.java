@@ -31,7 +31,8 @@ public class ShoppingCartTest {
         Item item = new Item(id);
         item.setPrice(price);
         item.setName(name);
-
+        // questionable if I should do stubbing in helper method, but it makes
+        // the tests more concise and easier to read
         when(mockedInventory.getItemByName(name)).thenReturn(item);
 
         shoppingCart.addItem(name, quantity);
@@ -42,6 +43,8 @@ public class ShoppingCartTest {
         item.setPrice(price);
         item.setName(name);
 
+        // questionable if I should do stubbing in helper method, but it makes
+        // the tests more concise and easier to read
         when(mockedInventory.getItemByName(name)).thenReturn(item);
 
         shoppingCart.addItem(name);
@@ -51,52 +54,38 @@ public class ShoppingCartTest {
     @Test
     public void getItemTotal_whenAddingSingleItem_totalPriceEqualsItemPrice() throws Exception{
 
-        String itemName = "KitKat";
-        Item item = new Item(1);
-        item.setPrice(10.00);
-        item.setName(itemName);
+        double price = 10.00;
 
-        when(mockedInventory.getItemByName(itemName)).thenReturn(item);
-
-        shoppingCart.addItem(itemName);
+        this.addItemToShoppingCart(1, "KitKat", price);
 
 
-        assertEquals(item.getPrice().doubleValue(), shoppingCart.getItemTotal(), 0.001);
+        assertEquals(price, shoppingCart.getItemTotal(), 0.001);
     }
 
     @Test
     public void getItemTotal_addingTwoOfSameItems_totalPriceIsDoubleItemPrice() throws Exception{
-        String itemName = "Bottle Caps";
-        Item item = new Item(1);
-        item.setPrice(10.00);
-        item.setName(itemName);
+        double price = 10.00;
 
-        when(mockedInventory.getItemByName(itemName)).thenReturn(item);
+        this.addItemToShoppingCart(1, "Bottle Caps", price);
+        this.addItemToShoppingCart(1, "Bottle Caps", price);
 
-        shoppingCart.addItem(itemName);
-        shoppingCart.addItem(itemName);
 
-        BigDecimal twiceThePriceValue = item.getPrice().multiply(new BigDecimal(2));
+        BigDecimal twiceThePriceValue = new BigDecimal(price).multiply(new BigDecimal(2));
         assertEquals(twiceThePriceValue.doubleValue(), shoppingCart.getItemTotal(), 0.001);
     }
 
     @Test
     public void getItemTotal_addingTwoDifferentItems_totalPriceIsSumOfItemPrices() throws Exception{
-        String item1Name = "PayDay";
-        Item item1 = new Item(1);
-        item1.setPrice(10.00);
-        String item2Name = "Zero";
-        Item item2 = new Item(2);
-        item2.setPrice(5.50);
 
-        when(mockedInventory.getItemByName(item1Name)).thenReturn(item1);
-        when(mockedInventory.getItemByName(item2Name)).thenReturn(item2);
+        double price1 = 10.00;
+        this.addItemToShoppingCart(1, "PayDay", price1);
 
-        shoppingCart.addItem(item1Name);
-        shoppingCart.addItem(item2Name);
+        double price2 = 10.00;
+        this.addItemToShoppingCart(1, "Zero", price2);
 
-        BigDecimal sumOfPrices = item1.getPrice().add(item2.getPrice());
-        assertEquals(sumOfPrices.doubleValue(), shoppingCart.getItemTotal(), 0.001);
+
+        double sumOfPrices = price1 + price2;
+        assertEquals(sumOfPrices, shoppingCart.getItemTotal(), 0.001);
     }
 
     @Test
