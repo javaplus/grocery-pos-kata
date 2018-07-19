@@ -1,0 +1,211 @@
+{
+	"variables": [],
+	"info": {
+		"name": "PillarGroceryPOSKata",
+		"_postman_id": "619447be-6dbb-de8b-1036-87c452441e9e",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add FunDip to Inventory",
+			"request": {
+				"url": "http://localhost:8080/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"FunDip\",\"price\":\".99\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Doritos to Inventory",
+			"request": {
+				"url": "http://localhost:8080/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Doritos\",\"price\":\"2.97\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Twizzlers to Inventory",
+			"request": {
+				"url": "http://localhost:8080/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Twizzlers\",\"price\":\"3.59\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add KitKat To Inventory",
+			"request": {
+				"url": "http://localhost:8080/inventory/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"KitKat\",\"price\":\"2.79\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Items From Inventory",
+			"request": {
+				"url": "http://localhost:8080/inventory/items",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"price\":\"2.50\"}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add FunDipTo ShoppingCart",
+			"request": {
+				"url": "http://localhost:8080/shoppingcart/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"FunDip\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add KitKat To ShoppingCart",
+			"request": {
+				"url": "http://localhost:8080/shoppingcart/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"KitKat\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Doritos To ShoppingCart By Weight",
+			"request": {
+				"url": "http://localhost:8080/shoppingcart/items",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"itemName\":\"Doritos\", \"weight\": 2.0}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item From Shopping Cart",
+			"request": {
+				"url": "http://localhost:8080/shoppingcart/items/FunDip",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Shopping Cart Total",
+			"request": {
+				"url": "http://localhost:8080/shoppingcart/total",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"FunDip\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
