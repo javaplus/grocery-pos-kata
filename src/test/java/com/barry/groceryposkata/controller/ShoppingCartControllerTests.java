@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,6 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
@@ -55,7 +58,7 @@ public class ShoppingCartControllerTests {
         String itemName = "KitKat";
         inventory.addItem(itemName,10.33);
 
-        String jsonRequest = String.format("{\"name\":\"%s\"}", itemName);
+        String jsonRequest = String.format("{\"itemName\":\"%s\"}", itemName);
 
         mockMvc.perform(post("/shoppingcart/items")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +88,7 @@ public class ShoppingCartControllerTests {
         String itemName = "KitKat";
         inventory.addItem(itemName,10.33);
 
-        String jsonRequest = String.format("{\"name\":\"%s\"}", itemName);
+        String jsonRequest = String.format("{\"itemName\":\"%s\"}", itemName);
 
         mockMvc.perform(post("/shoppingcart/items")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -95,6 +98,45 @@ public class ShoppingCartControllerTests {
                 .andExpect(jsonPath("$.name", is(itemName)));
 
     }
+
+    @Test
+    public void addItem_whenAddingItemWithWeight_cartTotalReflectsWeightTimesPrice() throws Exception{
+
+        // add item to inventory
+        String itemName = "Truffles";
+        inventory.addItem(itemName,1.00);
+
+        double weight = 1.5;
+
+        String jsonRequest = String.format("{\"itemName\":\"%s\", \"weight\":%s}", itemName, weight);
+
+        mockMvc.perform(post("/shoppingcart/items")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest))
+                .andExpect(status().isOk());
+
+        // verify shopping cart total is appropriate
+        assertEquals(1.50, shoppingCart.getItemTotal(), 0.001);
+    }
+
+    @Test
+    public void addItem_whenAddingItemWithNoWeight_cartTotalReflectsItemPrice() throws Exception{
+
+        // add item to inventory
+        String itemName = "Gobstoppers";
+        inventory.addItem(itemName,2.50);
+
+        String jsonRequest = String.format("{\"itemName\":\"%s\"}", itemName);
+
+        mockMvc.perform(post("/shoppingcart/items")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest))
+                .andExpect(status().isOk());
+
+        // verify shopping cart total is appropriate
+        assertEquals(2.50, shoppingCart.getItemTotal(), 0.001);
+    }
+
 
     @Test
     public void getTotal_whenNothingInShoppingCart_returnsZeroTotal() throws Exception{
@@ -122,4 +164,30 @@ public class ShoppingCartControllerTests {
 
 
     }
+
+    @Test
+    public void getTotal_addingTwoItemsToCartAndCallingGetTotal_returnsSumOfItems() throws Exception{
+
+        String itemName1 = "KitKat";
+        double price1 = 10.33;
+        inventory.addItem(itemName1,price1);
+
+        String itemName2 = "Watchmacallit";
+        double price2 = 2.55;
+        inventory.addItem(itemName2,2.55);
+
+        // add our item directly to the shopping cart
+        shoppingCart.addItem(itemName1);
+        shoppingCart.addItem(itemName2);
+
+        // expectedPrice is sum of two prices.
+        BigDecimal expectedPrice = new BigDecimal(price1 + price2).setScale(2, RoundingMode.HALF_UP);
+
+        mockMvc.perform(get("/shoppingcart/total"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total", is(expectedPrice.doubleValue())));
+
+
+    }
+
 }

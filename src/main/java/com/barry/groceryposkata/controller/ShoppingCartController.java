@@ -2,6 +2,7 @@ package com.barry.groceryposkata.controller;
 
 
 import com.barry.groceryposkata.entities.Item;
+import com.barry.groceryposkata.entities.ShoppingCartAddRequest;
 import com.barry.groceryposkata.service.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,11 @@ public class ShoppingCartController {
 
     @RequestMapping(value = "/items", method = RequestMethod.POST)
     @ResponseBody
-    public Item addItem(@RequestBody Item item) throws Exception{
+    public Item addItem(@RequestBody ShoppingCartAddRequest request) throws Exception{
 
-        return shoppingCart.addItem(item.getName());
+        double weight = (request.getWeight() > 0.00)? request.getWeight(): 1.00;
+
+        return shoppingCart.addItem(request.getItemName(), weight);
 
     }
 
