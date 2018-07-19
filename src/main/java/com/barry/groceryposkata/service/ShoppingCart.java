@@ -20,7 +20,8 @@ public class ShoppingCart {
     @Setter
     private Inventory inventory;
 
-    List<ItemOrder> itemList = new ArrayList<ItemOrder>();
+    @Setter
+    private List<ItemOrder> itemList = new ArrayList<ItemOrder>();
 
     public Item addItem(String name) throws ItemNotFoundException {
 

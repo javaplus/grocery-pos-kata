@@ -22,4 +22,14 @@ public class ShoppingCartController {
 
     }
 
+    @RequestMapping(value = "/total", method = RequestMethod.GET)
+    //@ResponseBody
+    public String getTotal() throws Exception{
+
+        double total = shoppingCart.getItemTotal();
+        String response = String.format("{\"total\":%s}",total);
+        return response;
+
+    }
+
 }

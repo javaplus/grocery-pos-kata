@@ -12,11 +12,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,6 +41,12 @@ public class ShoppingCartControllerTests {
     public void clearInventory(){
         // clear inventory
         inventory.setItemMap(new HashMap<>());
+    }
+
+    @Before
+    public void clearShoppingCart(){
+        // clear inventory
+        shoppingCart.setItemList(new ArrayList<>());
     }
 
     @Test
@@ -85,6 +93,33 @@ public class ShoppingCartControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.price", is(10.33)))
                 .andExpect(jsonPath("$.name", is(itemName)));
+
+    }
+
+    @Test
+    public void getTotal_whenNothingInShoppingCart_returnsZeroTotal() throws Exception{
+
+        // nothing added to cart...
+
+        mockMvc.perform(get("/shoppingcart/total"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total", is(0.00)));
+
+
+    }
+
+    @Test
+    public void getTotal_addingOneItemCartAndCallingGetTotal_returnsPriceOfThatItem() throws Exception{
+
+        String itemName = "KitKat";
+        inventory.addItem(itemName,10.33);
+        // add our item directly to the shopping cart
+        shoppingCart.addItem(itemName);
+
+        mockMvc.perform(get("/shoppingcart/total"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total", is(10.33)));
+
 
     }
 }
