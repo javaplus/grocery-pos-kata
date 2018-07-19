@@ -11,7 +11,7 @@ To actually run the application run "**mvn spring-boot:run**"
 By default it will listen on port 8080.
 
 I've added a PostMan collection if you wish to test it actually running.  Postman collection is at root of project.
-(PillarGroceryPOSKata.postman_collection.json)[https://github.com/javaplus/grocery-pos-kata/blob/master/PillarGroceryPOSKata.postman_collection.json]
+[PillarGroceryPOSKata.postman_collection.json](https://github.com/javaplus/grocery-pos-kata/blob/master/PillarGroceryPOSKata.postman_collection.json)
 
 I've also created a Swagger/Open API Spec on SwaggerHub for what I've completed so far.
 
