@@ -1,4 +1,4 @@
-package com.barry.groceryposkata;
+package com.barry.groceryposkata.controller;
 
 import com.barry.groceryposkata.entities.Item;
 import com.barry.groceryposkata.service.Inventory;
