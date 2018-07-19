@@ -14,8 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
+import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -66,6 +68,23 @@ public class ShoppingCartControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequest))
                 .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    public void addItem_whenAddingItem_returnsItemInformation() throws Exception{
+
+        String itemName = "KitKat";
+        inventory.addItem(itemName,10.33);
+
+        String jsonRequest = String.format("{\"name\":\"%s\"}", itemName);
+
+        mockMvc.perform(post("/shoppingcart/items")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequest))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.price", is(10.33)))
+                .andExpect(jsonPath("$.name", is(itemName)));
 
     }
 }

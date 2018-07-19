@@ -22,16 +22,19 @@ public class ShoppingCart {
 
     List<ItemOrder> itemList = new ArrayList<ItemOrder>();
 
-    public void addItem(String name) throws ItemNotFoundException {
+    public Item addItem(String name) throws ItemNotFoundException {
 
-        this.addItem(name, 1.00);
+        return this.addItem(name, 1.00);
     }
 
-    public void addItem(String name, double weight) throws ItemNotFoundException{
+    public Item addItem(String name, double weight) throws ItemNotFoundException{
 
-        ItemOrder itemOrder = new ItemOrder(inventory.getItemByName(name), weight);
+        Item item = inventory.getItemByName(name);
+        ItemOrder itemOrder = new ItemOrder(item, weight);
 
         itemList.add(itemOrder);
+
+        return item;
     }
 
 
