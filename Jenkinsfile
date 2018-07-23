@@ -2,7 +2,7 @@ pipeline {
   
   agent any
   stages {
-    stage('Build') {
+    stage('Test') {
         steps{
       withMaven(
         // Maven installation declared in the Jenkins "Global Tool Configuration"
@@ -14,7 +14,7 @@ pipeline {
     }
         }
     }
-    stage ('Unit Test') {
+    stage ('Build') {
       steps {
         withMaven(
         // Maven installation declared in the Jenkins "Global Tool Configuration"
